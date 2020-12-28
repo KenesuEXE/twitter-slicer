@@ -32,11 +32,13 @@ def raw_counted_slice(text):
 def clean_counted_slice(text):
   ccs = []
   i = 0
+  count = 1
   while i+272 < len(text):
     for z in range(i+272, i-1, -1):
       if text[z].isspace():
-        ccs.append(text[i:z] + " ({}/{})".format(z//272+1, len(text)//272+1))
-        i = z + 1 
+        ccs.append(text[i:z] + " ({}/{})".format(count, len(text)//272+1))
+        i = z + 1
+        count += 1
         break
   ccs.append(text[i:len(text)] + " ({}/{})".format(len(text)//272+1, len(text)//272+1))
   return ccs
