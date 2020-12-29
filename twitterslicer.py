@@ -1,46 +1,27 @@
-#Raw Slice
-#Slices the text into strictly 280-character chunks.
+import textwrap
+
 def raw_slice(text):
   rs = []
-  for i in range(0, len(text), 280): #i = 0, 280, 560, ...
-    rs.append(text[i:i+280]) #Append chars with index 0-279, then 280-559, and so on.
+  for i in range(0, len(text), 280):
+    rs.append(text[i:i+280])
   return rs
 
-#Clean Slice
-#Will not slice in the middle of words, instead cuts in the nearest whitespace.
 def clean_slice(text):
-  cs = []
-  i = 0
-  while i+280 < len(text): #Gets the first 280 chars.
-    for z in range(i+280, i-1, -1): #Starting from the 280th, go backwards  and find the nearest whitespace.
-      if text[z].isspace():
-        cs.append(text[i:z]) #Append from start up to the last word.
-        i = z + 1 #The new starting point will be where we have just cutted it.
-        break
-  cs.append(text[i:len(text)]) #No more cutting needed, append remaining words.
+  cs = textwrap.wrap(text, width=280)
   return cs
 
-
-#Counted Slice
-#Includes a thread counter which is 8 chars long in the format " (00/00)".
 def raw_counted_slice(text):
   rcs = []
-  for i in range(0, len(text), 272): #280 minus 8 chars to make space for counter.
+  for i in range(0, len(text), 272):
     rcs.append(text[i:i+272] + " ({}/{})".format(i//272+1, len(text)//272+1))
   return rcs
 
 def clean_counted_slice(text):
   ccs = []
-  i = 0
   count = 1
-  while i+272 < len(text):
-    for z in range(i+272, i-1, -1):
-      if text[z].isspace():
-        ccs.append(text[i:z] + " ({}/{})".format(count, len(text)//272+1))
-        i = z + 1
-        count += 1
-        break
-  ccs.append(text[i:len(text)] + " ({}/{})".format(len(text)//272+1, len(text)//272+1))
+  for e in textwrap.wrap(text, width=272):
+    ccs.append(e + " ({}/{})".format(count, len(text)//272+1))
+    count += 1
   return ccs
 
 #its the navy seal copypasta lmfaoooo
