@@ -1,5 +1,5 @@
 # TWITTER SLICER 
-> **Slice your lengthy texts into tweetable chunks!**
+**Slice your lengthy texts into tweetable chunks!**
 
 #### By Limit
 > Cut the text into strictly 280-character chunks to maximize every tweet.
