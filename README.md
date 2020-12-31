@@ -1,15 +1,20 @@
 # TWITTER SLICER 
-**Slice your lengthy texts into tweetable chunks!**
+Slice your lengthy texts into tweetable chunks!
 
-#### By Limit
-> Cut the text into strictly 280-character chunks to maximize every tweet.
+### Slicing Modes
 
-#### By Space
-> Cut the text in whitespaces so it doesn't cut between words.
+**By Limit**
+: Cut the text into strictly 280-character chunks to maximize every tweet.
 
-#### By Punctuation
-> Cut the text in punctuation marks so it doesn't cut between sentences.
+**By Space**
+: Cut the text in whitespaces so it doesn't cut between words.
 
-A beginner project made by:
+**By Punctuation**
+: Cut the text in punctuation marks so it doesn't cut between sentences.
+
+**Add Counter**
+: Adds a counter at the end of the tweet to keep it numbered.
+
+> A beginner Python project made by:
 > **KenesuEXE**
 > December 2020 - January 2021
