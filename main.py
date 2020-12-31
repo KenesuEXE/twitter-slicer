@@ -2,33 +2,47 @@ import twitterslicer
 
 print("""
 The TWITTER SLICER
-Slice your lengthy text into tweetable chunks!
-made by: KenesuEXE — u/KnnthKnnth\n
+by KenesuEXE \n
 """)
 
-text = input("""
+text = input ("""
 Paste your text here:
-(If you want a sample text, input 'example') \n
-""")
-if text == "example":
-  text = twitterslicer.example
+(If you want to use a sample text, input 'sample')
+\n""")
 
-mode = input("""
-Choose a slicing mode:
-1 - Raw Slice
-2 - Clean Slice
-3 - Raw Counted Slice
-4 - Clean Counted Slice \n
-""")
+if text == 'sample':
+  text = twitterslicer.sample
 
+mode = input ("""
+Pick a slicing mode:
+1 - By limit
+2 - By space
+3 - By punctuation
+\n""")
+
+count = input("""
+Add counter?
+1 - Yes
+2 - No
+\n""")
+
+if count.lower() == "1":
+  counter = True
+elif count.lower() == "2":
+  counter = False
+else:
+  counter = True
+  print ("\nCounter input error, set to default: True")
+  
 if mode == "1":
-  tweets = twitterslicer.raw_slice(text)
+  tweets = twitterslicer.by_limit(text, counter)
 elif mode == "2":
-  tweets = twitterslicer.clean_slice(text)
+  tweets = twitterslicer.by_space(text, counter)
 elif mode == "3":
-  tweets = twitterslicer.raw_counted_slice(text)
-elif mode == "4":
-  tweets = twitterslicer.clean_counted_slice(text)
-
-for chunks in tweets:
-  print("\n", chunks)
+  tweets = twitterslicer.by_punctuation(text, counter)
+else:
+  print("\nMode input error, set to default: Punctuation")
+  tweets = twitterslicer.by_punctuation(text, counter)
+  
+for tweet in tweets:
+  print ("\n", tweet)
