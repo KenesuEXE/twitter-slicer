@@ -3,16 +3,22 @@ import twitterslicer
 
 def main():
     mode_query = input("""
-Pick a slicing mode:
+Choose slicing mode:
 1 - By limit
 2 - By space
 3 - By punctuation
     \n""")
 
     counter_query = input("""
-Add counter?
+Choose counter mode:
 1 - Yes
 2 - No
+    \n""")
+
+    output_query = input("""
+Choose output mode:
+1 - Print here in console
+2 - Tweet directly to Twitter
     \n""")
 
     if counter_query == "1":
@@ -21,7 +27,7 @@ Add counter?
         counter = False
     else:  # Wrong Input
         counter = True
-        print("\nCounter input error, set to default: True")
+        print("\nCounter mode input error, set to default: True")
 
     if mode_query == "1":
         tweets = twitterslicer.by_limit(text, counter)
@@ -31,11 +37,16 @@ Add counter?
         tweets = twitterslicer.by_punctuation(text, counter)
     else:  # Wrong  input
         tweets = twitterslicer.by_punctuation(text, counter)
-        print("\nMode input error, set to default: Punctuation")
+        print("\nSlicing mode input error, set to default: Punctuation")
 
-    print("\nHere are your tweets:")
-    for tweet in tweets:  # Prints all elements in list 'tweets'.
-        print("\n", tweet)
+    if output_query == "1":
+        twitterslicer.print_tweets(tweets)
+    elif output_query == "2":
+        twitterslicer.create_twitter_thread(tweets)
+    else:  # Wrong Input
+        print("\nOutput mode input error, set to default: Print Tweets")
+        twitterslicer.print_tweets(tweets)
+ 
 
 if __name__ == "__main__":    
     print("TWITTER SLICER v2 by KenesuEXE\n")

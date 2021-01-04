@@ -1,5 +1,6 @@
 import textwrap
-
+import tweepy
+from keys import *
 
 def by_limit(text, counter):
     tweets = []
@@ -61,3 +62,27 @@ def by_punctuation(text, counter):
         tweets.append(text[index:len(text)])
 
     return tweets
+
+
+def print_tweets(tweets):
+    print("\nHere are your tweets:")
+    for tweet in tweets:  # Prints all elements in list 'tweets'.
+        print("\n", tweet)
+    print("\nAll Done!")
+
+def create_twitter_thread(tweets):
+
+    auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+    api = tweepy.API(auth)
+
+    count = 0
+    print("\nTweeting tweet #1")
+    tweet = api.update_status(status=tweets[0])
+    while count <= len(tweets) - 2:
+
+        count += 1
+        print("\nTweeting tweet #" + str(count+1))
+        tweet = api.update_status(status=tweets[count], in_reply_to_status_id=tweet.id, auto_populate_reply_metadata=True)
+
+    print("\nAll Done!")
