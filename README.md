@@ -2,6 +2,9 @@
 
 *Slice your lengthy texts into tweetable chunks!*
 
+### Directly Posting to Twitter?
+Coming soon...
+
 ### How to Use?
 
 1. Paste your text onto `texthere.txt`.
