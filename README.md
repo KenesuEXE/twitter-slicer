@@ -26,6 +26,12 @@ Slice the text in punctuation marks so it doesn't cut between sentences.
 **Add Counter**  
 Adds a counter at the end of the tweet to keep it numbered.
 
+### What Each Files Do
+`main.py` Main script, run this.  
+`texthere.txt` Paste your text to be sliced HERE.   
+`twitterslicer.py` All logic and functions here.  
+`keys.py` Paste tokens here if you want to directly post to Twitter.  
+
 *A beginner Python project made by:*  
 **KenesuEXE**  
 December 2020 - January 2021
