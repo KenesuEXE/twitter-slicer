@@ -1,88 +1,89 @@
+from keys import *
+import sys
 import textwrap
 import tweepy
-from keys import *
-
-def by_limit(text, counter):
-    tweets = []
-    count = 1
-
-    if counter:  # By Limit with Counter
-        for i in range(0, len(text), 272):  # Append text with index 0-272, plus a counter which is 8 characters long, then repeat.
-            tweets.append(text[i:i+272] + " ({}/{})".format(count, len(text)//272+1))
-            count += 1
-
-    else:  # By Limit without Counter
-        for i in range(0, len(text), 280):  # Append text with index 0-280, and so on.
-            tweets.append(text[i:i+280])
-
-    return tweets
 
 
-def by_space(text, counter):
-    tweets = []
-    count = 1
+class Slice:
+    def __init__(self, text, counter):
+        self.text = text
+        self.counter = counter
+        self.tweets = []
 
-    if counter:  # By Space with Counter
-        for tweet in textwrap.wrap(text, width=272):  # Use textwrap.wrap module to cut to the nearest whitespace, plus a counter.
-            tweets.append(tweet + " ({}/{})".format(count, len(text)//272+1))
-            count += 1
+    def limit(self):
 
-    else:  # By Space without Counter
-        tweets = textwrap.wrap(text, width=280)
+        if self.counter:
+            for index in range(0, len(self.text), 272):
+                self.tweets.append(self.text[index:index+272] +
+                                   " ({}/{})".format(index//272+1, len(self.text)//272+1))
 
-    return tweets
+        else:
+            for index in range(0, len(self.text), 280):
+                self.tweets.append(self.text[index:index+280])
+
+        return self.tweets
+
+    def space(self):
+
+        if self.counter:
+            tweets_temp = textwrap.wrap(self.text, width=272)
+            for tweet in tweets_temp:
+                self.tweets.append(tweet + " ({}/{})".format
+                                   (tweets_temp.index(tweet)+1, len(tweets_temp)))
+
+        else:
+            self.tweets = textwrap.wrap(self.text, width=280)
+
+        return self.tweets
+
+    def punct(self):
+        punct_marks = '.!?'
+        index = 0
+
+        if self.counter:
+            tweet_temp = []
+            count = 1
+
+            while index+272 < len(self.text):
+                for punct_search in range(index+272, index-1, -1):
+                    if self.text[punct_search] in punct_marks:
+                        tweet_temp.append(self.text[index:punct_search+1] +
+                                          " ({}/".format(count))
+                        index = punct_search+2
+                        count += 1
+                        break
+            tweet_temp.append(self.text[index:len(self.text)] +
+                              " ({}/".format(count))
+
+            for tweet in tweet_temp:
+                self.tweets.append(tweet + "{})".format(count))
+
+        else:
+            while index+280 < len(self.text):
+                for punct_search in range(index+280, index-1, -1):
+                    if text[punct_search] in punct_marks:
+                        tweets.append(self.text[index:punct_search+1])
+                        index = punct_search+2
+                        break
+            self.tweets.append(text[index:len(text)])
+
+        return self.tweets
 
 
-def by_punctuation(text, counter):
-    tweets = []
-    punct_marks = ".!?;"  # Sentence ending punctuations
-    count = 1
-    index = 0
+def tweet_thread(tweets):
 
-    if counter:  # By Punctuation with Counter
-        tweet_temp = []  # Temporary list
-        while index+272 < len(text):  # If the remaining text still has more than 272 (+8 for counter) characters, we must cut.
-            for punct_search in range(index+272, index-1, -1):  # From the 280th, go backwards and find the nearest punctuation mark.
-                if text[punct_search] in punct_marks:
-                    tweet_temp.append(text[index:punct_search+1] + " ({}/".format(count))  # Append from starting index up to punctuation mark. Since we can't yet find the total number of tweets we will be creating, we'll add the denominator later.
-                    index = punct_search+2  # New starting index at the next word
-                    count += 1
-                    break  # Go back to while loop
-        tweet_temp.append(text[index:len(text)] + " ({}/".format(count))  # No more cutting needed, append remaining words.
-        for tweet in tweet_temp:  # Call all tweets and add the denominator in the counter since we now know the total amount of tweets created. Remember format " ({}/{})".
-            tweets.append(tweet + "{})".format(count))
-
-    else:  # By Punctuation without Counter
-        while index+280 < len(text):  # Same thing as above, without the complex counter
-            for punct_search in range(index+280, index-1, -1):
-                if text[punct_search] in punct_marks:
-                    tweets.append(text[index:punct_search+1])
-                    index = punct_search+2
-                    break
-        tweets.append(text[index:len(text)])
-
-    return tweets
-
-
-def print_tweets(tweets):
-    print("\nHere are your tweets:")
-    for tweet in tweets:  # Prints all elements in list 'tweets'.
-        print("\n", tweet)
-    print("\nAll Done!")
-
-def create_twitter_thread(tweets):
-
+    print("\nConnecting to Twitter...")
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
 
-    count = 0
-    print("\nTweeting tweet #1")
-    tweet = api.update_status(status=tweets[0])
-    while count <= len(tweets) - 2:
+    try:
+        tweet = api.update_status(status=tweets[0])
+    except tweepy.error.TweepError:
+        sys.exit("ERROR: Invalid API keys")
 
-        count += 1
-        print("\nTweeting tweet #" + str(count+1))
-        tweet = api.update_status(status=tweets[count], in_reply_to_status_id=tweet.id, auto_populate_reply_metadata=True)
-
-    print("\nAll Done!")
+    print("Tweeting your tweets...")
+    for tweet_index in range(1, len(tweets)):
+        tweet = api.update_status(status=tweets[tweet_index],
+                                  in_reply_to_status_id=tweet.id,
+                                  auto_populate_reply_metadata=True)
