@@ -45,7 +45,7 @@ Here are some examples on how to run the program:
 `python main.py my_tweet.txt -p -t`  
 *slices the text by punctuations and auto-Tweets it.*      
 
-`python main.py thoughts_on_cats.txt -u -l`  
+`python main.py thoughts_on_cats.txt --uncount --limit`  
 *slices the text by Tweet limit and removes the counter*  
 
 *Note: This is a beginner project, do not expect high quality since I am still learning, suggestions and helpful criticisms are welcome. :)*  
