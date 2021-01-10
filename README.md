@@ -1,7 +1,7 @@
 # TWITTER-SLICER
 The Twitter-Slicer is a Python program that helps you make a Twitter 
 thread by cutting a text in a file into tweetable parts that you
-can Tweet directly or copy-paste to Twitter.
+can Tweet directly (using Tweepy) or copy-paste to Twitter.
 
 ## Functions
 ### Slicing Modes 
@@ -31,10 +31,11 @@ python main.py --help
 ```
 gh repo clone KenesuEXE/twitter-slicer
 ```
-2. Add a text file in the same directory
-3. If you plan to use the auto-tweeting function, insert your API keys in `keys.py`
-4. Run `main.py` along with the command-line parameters.
-5. All done! The tweets should be printed in the console or automatically tweeted.
+2. Install tweepy using: `pip install tweepy`
+3. Add a text file in the same directory
+4. If you plan to use the auto-tweeting function, insert your API keys in `keys.py`
+5. Run `main.py` along with the command-line parameters.
+6. All done! The tweets should be printed in the console or automatically tweeted.
 
 ## Example
 Here are some examples on how to run the program:   
