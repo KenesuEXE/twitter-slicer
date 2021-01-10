@@ -1,5 +1,5 @@
 # TWITTER-SLICER
-The Twitter-Slicer is a Python script that helps you make a Twitter 
+The Twitter-Slicer is a Python program that helps you make a Twitter 
 thread by cutting a text (in a .txt file) into tweetable parts that you
 can Tweet directly or copy-paste to Twitter.
 
