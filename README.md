@@ -33,11 +33,20 @@ gh repo clone KenesuEXE/twitter-slicer
 ```
 2. Add a text file in the same directory
 3. If you plan to use the auto-tweeting function, insert your API keys in `keys.py`
-4. Run `main.py` along with the command-line parameters. One such command can look like this:
-```
-python main.py my_tweet.txt -l -t
-```
+4. Run `main.py` along with the command-line parameters.
 5. All done! The tweets should be printed in the console or automatically tweeted.
+
+## Example
+Here are some examples on how to run the program:   
+
+`python main.py text_here.txt`  
+*slices the text by space (default)*  
+
+`python main.py my_tweet.txt -p -t`  
+*slices the text by punctuations and auto-Tweets it.*      
+
+`python main.py thoughts_on_cats.txt -u -l`  
+*slices the text by Tweet limit and removes the counter*  
 
 *Note: This is a beginner project, do not expect high quality since I am still learning, suggestions and helpful criticisms are welcome. :)*  
 
