@@ -61,7 +61,7 @@ class Slice:
         else:
             while index+280 < len(self.text):
                 for punct_search in range(index+280, index-1, -1):
-                    if text[punct_search] in punct_marks:
+                    if self.text[punct_search] in punct_marks:
                         tweets.append(self.text[index:punct_search+1])
                         index = punct_search+2
                         break
