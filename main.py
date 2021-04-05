@@ -1,13 +1,10 @@
 import argparse
-import sys
 from twitterslicer import *
 
-# The TWITTER SLICER v2
-# By KenesuEXE
 
 def main():
 
-    # Command line flag arguments
+    # Command line flags
     parser = argparse.ArgumentParser(description="A Twitter thread maker that slices a text into tweetable chunks.")
     slice_mode = parser.add_mutually_exclusive_group()
     parser.add_argument("file_name", help='insert text file')
@@ -19,11 +16,8 @@ def main():
     args = parser.parse_args()
 
     # Open and read text file
-    try:
-        with open(args.file_name) as text_file:
-            text = text_file.read()
-    except FileNotFoundError:
-        sys.exit("ERROR: Cannot find or read " + args.file_name)
+    with open(args.file_name) as text_file:
+        text = text_file.read()
 
     # Set counter mode
     if args.uncount:
@@ -31,8 +25,7 @@ def main():
     else:
         counter = True
 
-    tweets = []
-    slice_tweets = Slice(text, counter, tweets)
+    slice_tweets = Slice(text, counter)
 
     # Set slice mode
     if args.limit:

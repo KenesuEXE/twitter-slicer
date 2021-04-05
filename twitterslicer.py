@@ -1,14 +1,12 @@
 from keys import *
-import sys
 import textwrap
-import tweepy
 
 
 class Slice:
-    def __init__(self, text, counter, tweets):
+    def __init__(self, text, counter):
         self.text = text
         self.counter = counter
-        self.tweets = tweets
+        self.tweets = []
 
     def limit(self):
 
@@ -77,20 +75,18 @@ class Slice:
 
 
 def tweet_thread(tweets):
+    import tweepy
 
     print("\nConnecting to Twitter...")
     auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
     api = tweepy.API(auth)
 
-    # Tweet first the tweet
-    try:
-        tweet = api.update_status(status=tweets[0])
-    except tweepy.error.TweepError:
-        sys.exit("ERROR: Invalid API keys")
+    # Tweet the first tweet
+    print("Tweeting your tweets...")
+    tweet = api.update_status(status=tweets[0])
 
     # Tweet the rest of the thread
-    print("Tweeting your tweets...")
     for tweet_index in range(1, len(tweets)):
         tweet = api.update_status(status=tweets[tweet_index],
                                   in_reply_to_status_id=tweet.id,
