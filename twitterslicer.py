@@ -12,16 +12,17 @@ Slice text into tweetable chunks
 
 class Slice:
     """Slice text into tweetable chunks"""
-    def __init__(self, text_list, counter):
+    def __init__(self, text_list, has_counter):
         self.text_list = text_list
-        self.counter = counter
+        self.has_counter = has_counter
         self.tweets = []
+
 
     def limit(self):
         """Slice text to fit tweet character limit"""
 
         # By limit with counter
-        if self.counter:
+        if self.has_counter:
             count = 0
             for text in self.text_list:
                 while text:  # While text is not empty
@@ -39,11 +40,12 @@ class Slice:
 
         return self.tweets
 
+
     def space(self):
         """Slice text in whitespace before tweet limit"""
 
         # By Space with counter
-        if self.counter:
+        if self.has_counter:
             count = 0
             for text in self.text_list:
                 while len(text) > 272:  # While text is longer than limit
@@ -79,12 +81,13 @@ class Slice:
 
         return self.tweets
 
+
     def punct(self):
         """Slice text in punctuation marks before tweet limit"""
         punct_marks = ".?!"
 
         # By Punctuation with counter
-        if self.counter:
+        if self.has_counter:
             count = 0
             for text in self.text_list:
                 while len(text) > 272:  # While text is longer than limit
@@ -119,6 +122,7 @@ class Slice:
                     self.tweets.append(text)
 
         return self.tweets
+
 
     @staticmethod
     def indicated(text, sep):

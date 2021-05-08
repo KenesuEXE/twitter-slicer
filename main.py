@@ -28,9 +28,9 @@ def main():
     text_list = ts.Slice.indicated(text, sep)
 
     # Set counter and slicing mode
-    counter = False if args.uncount else True
+    has_counter = False if args.uncount else True
 
-    Slice = ts.Slice(text_list, counter)
+    Slice = ts.Slice(text_list, has_counter)
 
     if args.limit:
         tweets = Slice.limit()
