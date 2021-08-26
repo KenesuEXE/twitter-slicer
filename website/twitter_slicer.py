@@ -1,20 +1,7 @@
-"""
-Twitter-Slicer by KenesuEXE 2020-2021
-Slice text into tweetable chunks
-"""
-# Tweets are restricted to 280 chars long. The program slices the text
-# before the limit or the nearest whitespace/punct mark before the limit
-# and optionally adds a counter. The counter is 8 chars long " (00/00)",
-# thus tweets with counter will only hold 272 chars at max. The user can
-# also indicate where they want it to split using a separator. Finally, the
-# user can directly tweet the text to their Twitter, provided they have API keys.
-
-
-class Slice:
-    """Slice text into tweetable chunks"""
-    def __init__(self, text_list, has_counter):
+class SliceMode:
+    def __init__(self, text_list, with_counter):
         self.text_list = text_list
-        self.has_counter = has_counter
+        self.with_counter = with_counter
         self.tweets = []
 
 
@@ -22,7 +9,7 @@ class Slice:
         """Slice text to fit tweet character limit"""
 
         # By limit with counter
-        if self.has_counter:
+        if self.with_counter:
             count = 0
             for text in self.text_list:
                 while text:  # While text is not empty
@@ -45,7 +32,7 @@ class Slice:
         """Slice text in whitespace before tweet limit"""
 
         # By Space with counter
-        if self.has_counter:
+        if self.with_counter:
             count = 0
             for text in self.text_list:
                 while len(text) > 272:  # While text is longer than limit
@@ -87,7 +74,7 @@ class Slice:
         punct_marks = ".?!"
 
         # By Punctuation with counter
-        if self.has_counter:
+        if self.with_counter:
             count = 0
             for text in self.text_list:
                 while len(text) > 272:  # While text is longer than limit
@@ -127,41 +114,18 @@ class Slice:
     @staticmethod
     def indicated(text, sep):
         """Slice text in indicated separators"""
-        text_list = []
-
-        while text:  # While text is not empty
-
-            for index in range(len(text)):  # Search for indicated separator throughout text
-                if text[index:index+len(sep)] == sep:
-                    text_list.append(text[:index])  # Append from start to index
-                    text = text[index+len(sep):]  # Replace var text with the remaining text
-                    break
-            else:  # Append whole text if no separators found
-                text_list.append(text)
-                text = None  # Break out of while loop
-
-        text_list = list(filter(None, text_list))
-
-        return text_list
-
-
-def tweet_thread(tweets):
-    """Tweet thread to Twitter"""
-    import keys
-    import tweepy
-
-    # Authenticate to Twitter
-    print("\nConnecting to Twitter...")
-    auth = tweepy.OAuthHandler(keys.CONSUMER_KEY, keys.CONSUMER_SECRET)
-    auth.set_access_token(keys.ACCESS_KEY, keys.ACCESS_SECRET)
-    api = tweepy.API(auth)
-
-    # Tweet the parent/first tweet
-    print("Tweeting your tweets...")
-    tweet = api.update_status(status=tweets[0])
-
-    # Tweet the rest of the thread
-    for tweet_index in range(1, len(tweets)):
-        tweet = api.update_status(status=tweets[tweet_index],
-                                  in_reply_to_status_id=tweet.id,
-                                  auto_populate_reply_metadata=True)
+        if sep == "":
+            return [text]
+        else:
+            text_list = []
+            while text:  # While text is not empty
+                for index in range(len(text)):  # Search for indicated separator throughout text
+                    if text[index:index+len(sep)] == sep:
+                        text_list.append(text[:index])  # Append from start to index
+                        text = text[index+len(sep):]  # Replace var text with the remaining text
+                        break
+                else:  # Append whole text if no separators found
+                    text_list.append(text)
+                    text = None  # Break out of while loop
+            text_list = list(filter(None, text_list))  # Remove empty strings
+            return text_list

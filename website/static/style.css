@@ -1,0 +1,18 @@
+body {
+    background-color: #121212;
+    color: #e6e6e6;
+    font-family: Helvetica Neue;
+}
+a {
+    text-decoration: none;
+}
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+ul {
+    padding: 0;
+    list-style-type: none;
+}
