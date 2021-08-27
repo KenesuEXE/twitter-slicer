@@ -1,6 +1,6 @@
-WEBSITE DEPLOYMENT COMING VERY SOON
+<h1> TWITTER-SLICER(http://kenesuexe.pythonanywhere.com/) </h1>
+http://kenesuexe.pythonanywhere.com/
 
-<h1> TWITTER-SLICER </h1>
 <h3> Slice your text into tweetable chunks! </h3>
 
 Just paste your text in the textbox and press the Slice button!</li>
