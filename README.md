@@ -1,4 +1,4 @@
-<h1> TWITTER-SLICER(http://kenesuexe.pythonanywhere.com/) </h1>
+<h1> [TWITTER-SLICER](http://kenesuexe.pythonanywhere.com/) </h1>
 http://kenesuexe.pythonanywhere.com/
 
 <h3> Slice your text into tweetable chunks! </h3>
